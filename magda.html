@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magdalena Herrera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --white:     #ffffff;
+  --off-white: #f7f5f2;
+  --ink:       #0d0c0a;
+  --rust:      #8b3a2f;
+  --gray:      #7a7570;
+  --border:    #ddd9d3;
+  --light:     #edebe7;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--white); border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; padding: 0 2.5rem; height: 52px;
+}
+.nav-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+}
+.nav-center {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rust); text-align: center;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; justify-content: flex-end; }
+.nav-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; color: var(--gray); transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-toggle {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+}
+.nav-toggle span { display: block; width: 22px; height: 1px; background: var(--ink); transition: transform 0.3s, opacity 0.3s; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.mobile-menu {
+  display: none; position: fixed; top: 52px; left: 0; right: 0;
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 2rem 2.5rem; z-index: 99; flex-direction: column; gap: 1.5rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-style: italic; font-weight: 400;
+  color: var(--ink); text-decoration: none;
+}
+
+/* ── BANNER ── */
+.banner {
+  border-bottom: 1px solid var(--border); padding: 1rem 2.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--off-white); flex-wrap: wrap; gap: 0.5rem;
+}
+.banner span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.57rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray);
+}
+.banner .date { color: var(--rust); }
+
+/* ── HERO ── */
+.hero-body {
+  display: grid; grid-template-columns: 1.2fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.hero-main {
+  padding: 5rem 2.5rem 4rem; border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.57rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); margin-bottom: 2.5rem;
+}
+.hero-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 400; font-style: italic;
+  line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 2rem;
+}
+.hero-headline strong { font-weight: 700; font-style: normal; display: block; }
+.hero-sub {
+  font-size: 1rem; font-weight: 300; color: var(--gray);
+  max-width: 46ch; line-height: 1.8; margin-bottom: 3rem;
+}
+.hero-actions { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
+.btn-primary {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; background: var(--ink); color: var(--white); padding: 0.75rem 1.5rem; transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--rust); }
+.btn-secondary {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 0.2rem; transition: color 0.2s, border-color 0.2s;
+}
+.btn-secondary:hover { color: var(--rust); border-color: var(--rust); }
+.btn-secondary::after { content: ' →'; }
+
+/* ── HERO SIDEBAR ── */
+.hero-sidebar { display: flex; flex-direction: column; }
+.hero-portrait {
+  flex: 1; position: relative; background: var(--off-white);
+  overflow: hidden; min-height: 320px;
+  display: flex; align-items: flex-end;
+  border-bottom: 1px solid var(--border);
+}
+.portrait-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(to top, rgba(13,12,10,0.5) 0%, transparent 100%);
+  z-index: 2;
+}
+.portrait-overlay p {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.7);
+}
+.hero-log-strip { padding: 1.8rem 2rem; background: var(--off-white); }
+.log-strip-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.9rem;
+}
+.log-strip-lines { font-family: 'IBM Plex Mono', monospace; font-size: 0.56rem; line-height: 2; color: var(--gray); }
+.log-strip-lines .hl { color: var(--ink); }
+
+/* ── TICKER ── */
+.ticker {
+  overflow: hidden; white-space: nowrap;
+  background: var(--ink); border-bottom: 3px solid var(--ink); padding: 0.65rem 0;
+}
+.ticker-inner { display: inline-block; animation: tick 30s linear infinite; }
+.ticker-inner span {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-right: 3rem;
+}
+.ticker-inner .sep { color: var(--rust); }
+@keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── SECTION HEADER ── */
+.sh {
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 1.4rem;
+  padding: 1.3rem 2.5rem; border-bottom: 1px solid var(--border);
+}
+.sh-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.57rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; }
+.sh-rule { height: 1px; background: var(--border); }
+.sh-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.52rem; letter-spacing: 0.1em; color: var(--gray); }
+
+/* ── OBRA ── */
+.obra-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--border); }
+.obra-card { border-right: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
+.obra-card:last-child { border-right: none; }
+.obra-card:hover { background: var(--off-white); }
+.obra-img {
+  width: 100%; aspect-ratio: 3/2; background: var(--light);
+  position: relative; overflow: hidden; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.obra-img canvas { position: absolute; inset: 0; }
+.obra-img-label {
+  position: relative; z-index: 2;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.52rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray);
+}
+.obra-info { padding: 1.5rem 1.8rem 2rem; }
+.obra-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; letter-spacing: 0.14em; color: var(--rust); margin-bottom: 0.6rem; }
+.obra-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; font-weight: 400; margin-bottom: 0.3rem; }
+.obra-medium { font-family: 'IBM Plex Mono', monospace; font-size: 0.53rem; letter-spacing: 0.07em; color: var(--gray); margin-bottom: 0.8rem; }
+.obra-desc { font-size: 0.88rem; font-weight: 300; color: var(--gray); line-height: 1.65; }
+
+/* ── EXPOSICION ── */
+.expo-grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+.expo-left { padding: 4rem 2.5rem; border-right: 1px solid var(--border); }
+.expo-left h2 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5vw, 4.5rem); font-style: italic; font-weight: 400; line-height: 1.0; margin-bottom: 0.6rem; }
+.expo-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); margin-bottom: 2.5rem; display: block; }
+.expo-left p { font-size: 1rem; font-weight: 300; line-height: 1.85; color: var(--ink); margin-bottom: 1.2rem; max-width: 52ch; }
+.expo-pull { font-family: 'Playfair Display', serif !important; font-size: 1.2rem !important; font-style: italic; color: var(--gray) !important; border-left: 2px solid var(--rust); padding-left: 1.5rem; margin: 2rem 0 !important; }
+.expo-right { background: var(--off-white); padding: 4rem 2.5rem; }
+.expo-qs-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.52rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); margin-bottom: 1.6rem; display: block; }
+.expo-qs { list-style: none; margin-bottom: 2.5rem; }
+.expo-qs li { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-style: italic; font-weight: 400; line-height: 1.5; padding: 0.85rem 0; border-bottom: 1px solid var(--border); }
+.expo-qs li:last-child { border-bottom: none; }
+.expo-pieza { display: flex; gap: 1.2rem; align-items: flex-start; padding: 0.85rem 0; border-top: 1px solid var(--border); }
+.expo-pieza-n { font-family: 'IBM Plex Mono', monospace; font-size: 0.52rem; letter-spacing: 0.1em; color: var(--rust); padding-top: 0.1rem; min-width: 1rem; }
+.expo-pieza-t p { font-size: 0.88rem; font-weight: 400; line-height: 1.5; }
+.expo-pieza-t span { font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: var(--gray); letter-spacing: 0.06em; }
+
+/* ── LOG (3 columnas) ── */
+.log-section { border-bottom: 1px solid var(--border); padding: 3rem 2.5rem; background: var(--off-white); }
+.log-hd { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; flex-wrap: wrap; gap: 0.5rem; }
+.log-hd h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-style: italic; font-weight: 400; }
+.log-hd span { font-family: 'IBM Plex Mono', monospace; font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); }
+.log-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem; line-height: 2.1; color: var(--gray); }
+.ll { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hl { color: var(--ink); }
+
+/* ── SOBRE ── */
+.sobre { border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 2fr 1fr; }
+.sobre-bio { padding: 4rem 2.5rem; border-right: 1px solid var(--border); }
+.sobre-bio h2 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3.5rem); font-style: italic; font-weight: 400; line-height: 1.1; margin-bottom: 2rem; }
+.sobre-bio .lead { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-style: italic; color: var(--gray); margin-bottom: 1.5rem; }
+.sobre-bio p { font-size: 1rem; font-weight: 300; color: var(--ink); line-height: 1.85; max-width: 58ch; margin-bottom: 1.2rem; }
+.sobre-data { padding: 4rem 2rem; background: var(--off-white); }
+.data-block { margin-bottom: 2.2rem; }
+.data-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 0.52rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rust); margin-bottom: 0.7rem; display: block; }
+.data-list { list-style: none; }
+.data-list li { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.04em; color: var(--gray); padding: 0.38rem 0; border-bottom: 1px solid var(--border); line-height: 1.4; }
+.data-list li:last-child { border-bottom: none; }
+
+/* ── CONTACTO ── */
+.contacto { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+.contacto-l { padding: 4rem 2.5rem; border-right: 1px solid var(--border); }
+.contacto-l h2 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3rem); font-style: italic; font-weight: 400; margin-bottom: 1rem; }
+.contacto-l p { font-size: 0.95rem; font-weight: 300; color: var(--gray); max-width: 36ch; line-height: 1.75; }
+.contacto-r { padding: 4rem 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+.c-item { padding: 1.2rem 0; border-bottom: 1px solid var(--border); }
+.c-item:last-child { border-bottom: none; }
+.c-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); display: block; margin-bottom: 0.35rem; }
+.c-item a, .c-item span { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; font-weight: 400; color: var(--ink); text-decoration: none; display: block; transition: color 0.2s; }
+.c-item a:hover { color: var(--rust); }
+
+/* ── FOOTER ── */
+footer { padding: 1.4rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: var(--ink); }
+footer p { font-family: 'IBM Plex Mono', monospace; font-size: 0.52rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+footer .fn { color: rgba(255,255,255,0.8); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.hero-main > * { animation: fadeUp 0.75s ease forwards; opacity: 0; }
+.hero-eyebrow  { animation-delay: 0.05s; }
+.hero-headline { animation-delay: 0.2s; }
+.hero-sub      { animation-delay: 0.35s; }
+.hero-actions  { animation-delay: 0.5s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { grid-template-columns: 1fr auto; }
+  .nav-center, .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  .hero-body, .expo-grid, .sobre, .contacto { grid-template-columns: 1fr; }
+  .hero-main, .expo-left, .sobre-bio, .contacto-l { border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-portrait { min-height: 60vw; }
+  .obra-grid { grid-template-columns: 1fr 1fr; }
+  .obra-card:nth-child(2) { border-right: none; }
+  .obra-card:nth-child(3) { border-right: none; border-top: 1px solid var(--border); grid-column: span 2; }
+  .log-cols { grid-template-columns: 1fr; }
+}
+@media (max-width: 580px) {
+  nav { padding: 0 1.2rem; }
+  .banner, .hero-main, .expo-left, .expo-right,
+  .sobre-bio, .sobre-data, .contacto-l, .contacto-r,
+  .log-section { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .sh { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .obra-grid { grid-template-columns: 1fr; }
+  .obra-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .obra-card:nth-child(3) { grid-column: 1; }
+  .hero-headline { font-size: clamp(2.6rem, 11vw, 4rem); }
+  .mobile-menu { padding: 1.5rem 1.2rem; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-name">M. Herrera</span>
+  <span class="nav-center">Artista visual · Madrid</span>
+  <ul class="nav-links">
+    <li><a href="#obra">Obra</a></li>
+    <li><a href="#exposicion">Exposición</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <button class="nav-toggle" id="toggle" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mmenu">
+  <a href="#obra">Obra</a>
+  <a href="#exposicion">Exposición</a>
+  <a href="#sobre">Sobre</a>
+  <a href="#contacto">Contacto</a>
+</div>
+
+<div style="padding-top:52px">
+
+<div class="banner">
+  <span>Magdalena Herrera · Artista visual</span>
+  <span class="date">Próxima exposición: 01 · 05 · 2026 · Pionera Gallery, Madrid</span>
+</div>
+
+<div class="hero-body">
+  <div class="hero-main">
+    <div>
+      <p class="hero-eyebrow">Pintura · Instalación · Videoarte</p>
+      <h1 class="hero-headline">Memoria,<br>máquina,<br><strong>cuerpo.</strong></h1>
+      <p class="hero-sub">Obra que habita la tensión entre el sistema que registra y el cuerpo que siente. Entre lo que queda y lo que se pierde cuando la experiencia íntima es mediada por algoritmos.</p>
+      <div class="hero-actions">
+        <a href="#obra" class="btn-primary">Ver obra</a>
+        <a href="#exposicion" class="btn-secondary">The user is...</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-sidebar">
+    <div class="hero-portrait" id="portrait-wrap">
+      <canvas id="portrait-cv" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+      <div class="portrait-overlay">
+        <p>Magdalena Herrera · Madrid, 2026</p>
+      </div>
+    </div>
+    <div class="hero-log-strip">
+      <p class="log-strip-label">Fragment · OpenAI Memory Log</p>
+      <div class="log-strip-lines">
+        <span class="hl">[2024-09-02] — The user's name is Magda.</span><br>
+        <span>[2024-09-17] — Magda pinta y es conocida por sus pinturas</span><br>
+        <span class="hl">[2025-01-11] — Magda is Argentinian.</span><br>
+        <span>[2025-04-06] — Magda tiene 31 años, mide 1,53...</span><br>
+        <span>[2024-10-16] — Magda tiene un gato que es de ella y su ma...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>Magdalena Herrera</span><span class="sep"> · </span>
+    <span>The user is...</span><span class="sep"> · </span>
+    <span>01 · 05 · 2026</span><span class="sep"> · </span>
+    <span>Pionera Gallery · Madrid</span><span class="sep"> · </span>
+    <span>189 MB · Un diario no intencional</span><span class="sep"> · </span>
+    <span>¿Qué queda de lo que vivimos?</span><span class="sep"> · </span>
+    <span>Magdalena Herrera</span><span class="sep"> · </span>
+    <span>The user is...</span><span class="sep"> · </span>
+    <span>01 · 05 · 2026</span><span class="sep"> · </span>
+    <span>Pionera Gallery · Madrid</span><span class="sep"> · </span>
+    <span>189 MB · Un diario no intencional</span><span class="sep"> · </span>
+    <span>¿Qué queda de lo que vivimos?</span><span class="sep"> · </span>
+  </div>
+</div>
+
+<!-- OBRA -->
+<div id="obra">
+  <div class="sh">
+    <span class="sh-label">Obra</span>
+    <div class="sh-rule"></div>
+    <span class="sh-meta">3 piezas · 2026</span>
+  </div>
+  <div class="obra-grid">
+    <div class="obra-card">
+      <div class="obra-img" id="oi1"><canvas id="oc1"></canvas><span class="obra-img-label">imagen próximamente</span></div>
+      <div class="obra-info">
+        <p class="obra-num">001 · Pieza principal</p>
+        <p class="obra-title">The user is...</p>
+        <p class="obra-medium">2026 · Técnica mixta sobre lienzo · 162 × 97 cm</p>
+        <p class="obra-desc">El log de OpenAI como materia pictórica. Frases que emergen y se entierran bajo capas de óleo. Retrato involuntario construido por una máquina que no sabe lo que guarda.</p>
+      </div>
+    </div>
+    <div class="obra-card">
+      <div class="obra-img" id="oi2"><canvas id="oc2"></canvas><span class="obra-img-label">imagen próximamente</span></div>
+      <div class="obra-info">
+        <p class="obra-num">002 · Serie</p>
+        <p class="obra-title">Dípticos</p>
+        <p class="obra-medium">2026 · Óleo sobre lienzo · 33 × 24 cm c/u</p>
+        <p class="obra-desc">Dos lienzos por pieza: uno en gramática visual de máquina, otro en pintura figurativa sensorial. Dos epistemologías que conviven sin resolverse.</p>
+      </div>
+    </div>
+    <div class="obra-card">
+      <div class="obra-img" id="oi3"><canvas id="oc3"></canvas><span class="obra-img-label">imagen próximamente</span></div>
+      <div class="obra-info">
+        <p class="obra-num">003 · Instalación</p>
+        <p class="obra-title">Voz sintetizada</p>
+        <p class="obra-medium">2026 · Videoarte / Audio en loop · Con Ulises Herrera</p>
+        <p class="obra-desc">Fragmentos del historial leídos por voz de síntesis. La duración como forma de significado. Lo que la acumulación produce que ninguna frase contenía por separado.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPOSICION -->
+<div id="exposicion">
+  <div class="sh">
+    <span class="sh-label">Exposición</span>
+    <div class="sh-rule"></div>
+    <span class="sh-meta">01 · 05 · 2026 · Pionera Gallery</span>
+  </div>
+  <div class="expo-grid">
+    <div class="expo-left">
+      <h2>The user is...</h2>
+      <span class="expo-meta">Magdalena Herrera · Pionera Gallery, Madrid · Mayo 2026</span>
+      <p>Hay un archivo que nadie quiso llevar. 189 megabytes de texto —el desayuno, el nombre del gato, preocupaciones sin resolver— acumulados durante un año y medio en un servidor que no olvida nada porque no sabe lo que es olvidar.</p>
+      <p class="expo-pull">Un diario no intencional. Un retrato hecho sin consentimiento poético.</p>
+      <p>Al abrirlo: la extrañeza de verse desde afuera, en fragmentos, sin el hilo que internamente los une. La obra nació de ahí. No de la tecnología —de la pregunta que lleva años haciéndose: ¿qué queda de lo que vivimos?</p>
+      <p>La exposición reúne tres núcleos formales que dialogan entre sí sin explicarse mutuamente: el lienzo grande, la serie de dípticos y la instalación sonora en colaboración con Ulises Herrera.</p>
+    </div>
+    <div class="expo-right">
+      <span class="expo-qs-label">Preguntas que sostiene la obra</span>
+      <ul class="expo-qs">
+        <li>¿Qué queda de lo que vivimos?</li>
+        <li>¿Qué guarda la máquina que el cuerpo ya olvidó?</li>
+        <li>¿Qué guarda el cuerpo que la máquina nunca podrá registrar?</li>
+        <li>¿Soy estas cosas? ¿Es esto lo que quedará?</li>
+        <li>¿Puede el log ser también un acto de amor hacia quien se fue?</li>
+      </ul>
+      <div class="expo-pieza">
+        <span class="expo-pieza-n">I</span>
+        <div class="expo-pieza-t"><p>Lienzo de gran formato · 162 × 97 cm</p><span>Técnica mixta · IBM Plex Mono Bold · Óleo figurativo</span></div>
+      </div>
+      <div class="expo-pieza">
+        <span class="expo-pieza-n">II</span>
+        <div class="expo-pieza-t"><p>Serie de dípticos · 33 × 24 cm</p><span>Gramática visual de máquina + pintura figurativa sensorial</span></div>
+      </div>
+      <div class="expo-pieza">
+        <span class="expo-pieza-n">III</span>
+        <div class="expo-pieza-t"><p>Instalación sonora · Loop continuo</p><span>Voz sintetizada · Sennheiser · Con Ulises Herrera</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOG -->
+<div class="log-section">
+  <div class="log-hd">
+    <h3>El archivo</h3>
+    <span>Fragmento · OpenAI Memory Log · 2024–2025</span>
+  </div>
+  <div class="log-cols">
+    <div>
+      <span class="ll hl">[2024-05-26] — The user speaks Spanish.</span>
+      <span class="ll">[2024-07-15] — El usuario habla tailandés.</span>
+      <span class="ll hl">[2024-09-02] — The user's name is Magda.</span>
+      <span class="ll">[2024-09-06] — El usuario desayuna torta de avena con...</span>
+      <span class="ll">[2024-09-08] — Magda siente que su marido la acompaña</span>
+      <span class="ll hl">[2024-09-17] — Magda pinta y es conocida por sus pinturas</span>
+      <span class="ll">[2024-09-17] — Magda vive entre Madrid y Buenos Aires</span>
+    </div>
+    <div>
+      <span class="ll hl">[2024-09-17] — Magda viaja mucho.</span>
+      <span class="ll">[2024-09-19] — A Magda le gusta el pintor Liu Xiaodong</span>
+      <span class="ll">[2024-10-16] — Magda tiene un gato que es de ella y su...</span>
+      <span class="ll hl">[2024-10-20] — Magda nació en marzo del 94 y es Perro</span>
+      <span class="ll">[2024-11-06] — La familia de Magda está compuesta por 5...</span>
+      <span class="ll">[2024-12-17] — Ángela, la amiga de Magda, ahora vive en...</span>
+      <span class="ll hl">[2025-01-11] — Magda is Argentinian.</span>
+    </div>
+    <div>
+      <span class="ll">[2025-02-16] — Magda quiere publicar un libro de poemas</span>
+      <span class="ll">[2025-03-20] — Magda quiere explorar cómo las ideas de...</span>
+      <span class="ll hl">[2025-04-06] — Magda tiene 31 años, mide 1,53...</span>
+      <span class="ll">[2025-05-15] — Magda ha empezado clases de canto</span>
+      <span class="ll">[2025-07-29] — Magda nombró esta conversación como...</span>
+      <span class="ll hl">[2025-08-14] — Magda está con Ángela, una amiga.</span>
+      <span class="ll">[2025-09-11] — Magda's mom is preparing for the APTIS...</span>
+    </div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<div id="sobre" class="sobre">
+  <div class="sobre-bio">
+    <div class="sh" style="padding:0;border:none;margin-bottom:2.5rem;">
+      <span class="sh-label">Sobre</span><div class="sh-rule"></div>
+    </div>
+    <h2>Magdalena<br>Herrera</h2>
+    <p class="lead">Artista visual. Nacida en Córdoba, Argentina. Vive y trabaja en Madrid.</p>
+    <p>Su obra habita la tensión entre el sistema que registra y el cuerpo que siente —entre lo que la máquina guarda como dato y lo que la memoria guarda como herida o como gozo. Sus temas gravitantes son la memoria, la migración, el desplazamiento, la identidad y lo que se preserva o se pierde cuando la experiencia íntima es mediada por sistemas.</p>
+    <p>Trabaja en pintura figurativa al óleo y acrílico, videoarte e instalación.</p>
+    <p>Referentes: On Kawara, Harun Farocki, Chiara Fumai, Steve Reich, Hito Steyerl, Chris Marker, Donna Haraway.</p>
+  </div>
+  <div class="sobre-data">
+    <div class="data-block">
+      <span class="data-lbl">Exposiciones</span>
+      <ul class="data-list">
+        <li>The user is... · Pionera Gallery, Madrid · 2026</li>
+      </ul>
+    </div>
+    <div class="data-block">
+      <span class="data-lbl">Disciplinas</span>
+      <ul class="data-list">
+        <li>Pintura figurativa · óleo y acrílico</li>
+        <li>Videoarte e instalación</li>
+        <li>Arte conceptual</li>
+      </ul>
+    </div>
+    <div class="data-block">
+      <span class="data-lbl">Basada en</span>
+      <ul class="data-list">
+        <li>Madrid, España</li>
+        <li>Buenos Aires, Argentina</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTO -->
+<div id="contacto" class="contacto">
+  <div class="contacto-l">
+    <div class="sh" style="padding:0;border:none;margin-bottom:2rem;">
+      <span class="sh-label">Contacto</span><div class="sh-rule"></div>
+    </div>
+    <h2>Hablemos.</h2>
+    <p>Consultas sobre obra, prensa, colaboraciones y exposiciones.</p>
+  </div>
+  <div class="contacto-r">
+    <div class="c-item">
+      <span class="c-lbl">Email</span>
+      <a href="mailto:hola@magdalenaherrera.com">hola@magdalenaherrera.com</a>
+    </div>
+    <div class="c-item">
+      <span class="c-lbl">Instagram</span>
+      <a href="#">@magdalena.herrera</a>
+    </div>
+    <div class="c-item">
+      <span class="c-lbl">Exposición</span>
+      <span>The user is... · Pionera Gallery · Madrid · 01.05.2026</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="fn">Magdalena Herrera</p>
+  <p>© 2026 · Madrid · Buenos Aires</p>
+</footer>
+
+</div>
+
+<script>
+// Mobile menu
+const tog = document.getElementById('toggle');
+const mm  = document.getElementById('mmenu');
+tog.addEventListener('click', () => { tog.classList.toggle('open'); mm.classList.toggle('open'); });
+mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { tog.classList.remove('open'); mm.classList.remove('open'); }));
+
+// Portrait
+function drawPortrait() {
+  const wrap = document.getElementById('portrait-wrap');
+  const cv   = document.getElementById('portrait-cv');
+  if (!wrap || !cv) return;
+  const W = wrap.offsetWidth, H = wrap.offsetHeight;
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+  const bg = ctx.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,'#e8e4de'); bg.addColorStop(0.55,'#ddd8d0'); bg.addColorStop(1,'#c8c2b8');
+  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+  const cx = W*.52, cy = H*.4;
+  const hg = ctx.createRadialGradient(cx,cy-H*.13,0,cx,cy-H*.13,H*.15);
+  hg.addColorStop(0,'rgba(50,44,37,.52)'); hg.addColorStop(1,'rgba(50,44,37,0)');
+  ctx.fillStyle = hg;
+  ctx.beginPath(); ctx.ellipse(cx,cy-H*.13,W*.11,H*.14,0,0,Math.PI*2); ctx.fill();
+  const bg2 = ctx.createLinearGradient(cx,cy,cx,cy+H*.5);
+  bg2.addColorStop(0,'rgba(50,44,37,.4)'); bg2.addColorStop(.7,'rgba(50,44,37,.2)'); bg2.addColorStop(1,'rgba(50,44,37,0)');
+  ctx.fillStyle = bg2;
+  ctx.beginPath();
+  ctx.moveTo(cx-W*.07,cy);
+  ctx.bezierCurveTo(cx-W*.2,cy+H*.18,cx-W*.18,cy+H*.38,cx-W*.06,cy+H*.5);
+  ctx.lineTo(cx+W*.06,cy+H*.5);
+  ctx.bezierCurveTo(cx+W*.18,cy+H*.38,cx+W*.2,cy+H*.18,cx+W*.07,cy);
+  ctx.closePath(); ctx.fill();
+  const diss = ctx.createLinearGradient(0,0,0,H*.38);
+  diss.addColorStop(0,'rgba(232,228,222,.9)'); diss.addColorStop(1,'rgba(232,228,222,0)');
+  ctx.fillStyle = diss; ctx.fillRect(0,0,W,H*.38);
+  for (let i=0;i<5000;i++) { ctx.fillStyle=`rgba(0,0,0,${Math.random()*.055})`; ctx.fillRect(Math.random()*W,Math.random()*H,1,1); }
+}
+
+// Obra placeholders
+function drawPixels(cvId, wrapId, pal) {
+  const w = document.getElementById(wrapId), cv = document.getElementById(cvId);
+  if (!w||!cv) return;
+  const W=w.offsetWidth, H=w.offsetHeight;
+  cv.width=W; cv.height=H; cv.style.cssText='position:absolute;inset:0;';
+  const ctx=cv.getContext('2d'), sz=11;
+  for(let r=0;r<Math.ceil(H/sz);r++) for(let c=0;c<Math.ceil(W/sz);c++) if(Math.random()<.16){ctx.fillStyle=pal[Math.floor(Math.random()*pal.length)];ctx.globalAlpha=.1+Math.random()*.25;ctx.fillRect(c*sz,r*sz,sz-1,sz-1);}
+  ctx.globalAlpha=1;
+}
+
+window.addEventListener('load',()=>{
+  drawPortrait();
+  drawPixels('oc1','oi1',['#8b3a2f','#0d0c0a','#7a7570']);
+  drawPixels('oc2','oi2',['#7a7570','#ddd9d3','#0d0c0a']);
+  drawPixels('oc3','oi3',['#8b3a2f','#ddd9d3','#edebe7']);
+});
+
+// Log highlight cycling
+const hls=[...document.querySelectorAll('.log-cols .hl')];
+let i=0;
+setInterval(()=>{ hls.forEach(e=>e.style.fontWeight='300'); hls[i].style.fontWeight='700'; i=(i+1)%hls.length; },2000);
+</script>
+</body>
+</html>
